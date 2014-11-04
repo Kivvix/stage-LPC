@@ -1,0 +1,18 @@
+%%% CONCLUSION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Afin de conclure cette étude, je dresserai en un premier temps un bilan du projet réalisé, puis j'exposerai les difficultés que j'ai pu rencontrer pour finalement aborder les perspectives de ce projet.
+
+\ 
+
+L'objectif principal de ce stage était d'étudier les résultats de la \DC{}, cela permet d'apprécier la qualité de l'algorithme de détection de sources utilisé par le \stack. En effet les résultats étaient présents mais aucune analyse de ceux-ci n'ont été effectuées, la \DC{} a donc plus été un test faisabilité et de première mise en production du logiciel \stack{} qu'une évaluation de ce dernier. Cette étude a changé la donne, et l'écart entre les données de SDSS et du \stack{} est calculable. De plus les outils développés tout au long de ce stage sont réutilisables pour une autre \emph{Data-Challenge} ; en effet le projet LSST pense effectuer un nouveau test du \stack{} avec les données d'un autre télescope : le CFHT (\emph{Canada-France-Hawaii Telescope}) qui est un observatoire franco-canadien situé à Hawaï, utilisé principalement pour la surveillance de petits corps situé près du plan de l'ecliptique (plan de l'orbite terrestre).
+
+Une analyse systématique des résultats des \emph{Data-Challenge} est une volonté de l'équipe LSST-France. En effet cela permet de remonter différents problèmes du logiciel.
+
+\ 
+
+Les quelques difficultés techniques rencontrées étaient principalement dût au fait que je ne maîtrisais pas encore le langage \Python{} ainsi que le \emph{framework} \texttt{ROOT}, en effet ce dernier est difficilement paramétrable et sa configuration relève plus d'une étude empirique que de la compréhension de l'outil. Le temps de développement a été plus long que je ne le pensais à cause d'une volonté de modularité du code ainsi que sa maintenabilité. De plus il a fallut faire face à l'environnement de production, le \CC{}, qui pour des raisons de sécurité et d'accessibilité limite de nombreux accès. Le problème d'accès à la base de données SDSS persiste et est en attente de la conversion de cette base au LIMOS ; une solution temporaire a été apportée mais celle-ci reste grossière et non envisageable sur un plus grand jeu de données.
+
+\ 
+
+Les perspectives du projet sont plus personnelles puisque l'idée de comparaison des algorithmes est de mon initiative. Je n'ai malheureusement pas eu le temps de la réalisé, mais des esquisses ont été développées en attente d'une implémentation plus rigoureuse. Il est aussi envisagé de sauvegarder les informations des sources dans une base de données, un schéma relationnel de celle-ci est en cours d'étude.
+

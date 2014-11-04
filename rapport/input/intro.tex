@@ -1,0 +1,14 @@
+%%% INTRODUCTION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+L'utilisation de l'outil informatique pour réaliser des analyses longues ou poussées de données, ainsi que des simulations complexes est devenue courante dans le milieu scientifique. Ces études cependant nécessitent une évaluation de leur qualité ; en effet, en physique le calcul de l'erreur est souvent plus important que la mesure elle-même. Pour donner un exemple, un système GPS\footnote{GPS : (\emph{Global Positioning System}) système de géolocalisation par satellite.} ayant une définition supérieure à la centaine de kilomètres est inutile ; à l'inverse une précision de l'ordre du centimètre pour calibrer un missile est absurde. On constate donc que l'erreur tolérée dépend de l'utilisation.
+
+\ 
+
+Ce stage a pour but d'évaluer la qualité du logiciel de traitement d'images du futur télescope LSST : le \stack\footnote{Le terme \emph{stack} signifiant en anglais "pile" nous utiliserons aussi bien le féminin (pour rappeler la traduction du mot) que le masculin (puisqu'il s'agit d'un terme anglais sans genre, le masculin prend généralement le pas).}.
+
+Le télescope LSST est prévu pour la surveillance du ciel profond et des objets très faibles de notre système solaire comme des astéroïdes. La notion de ciel profond en astronomie désigne l'ensemble des objets en dehors de notre système solaire, donc lointains tels que d'autres galaxies, des nébuleuses ou des étoiles.
+La surveillance du ciel permet de repérer des évènements astronomiques de courtes durées comme des supernovæ qui sont considérées comme des "chandelles astronomiques" permettant des calculs de distances d'objets. L'astrométrie, c'est-à-dire la mesure des coordonnées des étoiles, doit être la plus précise possible pour en observer la déviation dans le temps. Cette observation continue du ciel permet aussi de surveiller les astéroïdes géocroiseurs, donc ceux dont l'orbite croise celle de la Terre et qui sont donc potentiellement dangereux.
+
+\ 
+
+Le logiciel \stack{} a pu être testé l'été dernier au cours de la \emph{Data-Challenge 2013} (\DC) sur les données du télescope SDSS, sur la \emph{stripe 82} qui est une bande du ciel proche de l'équateur céleste. L'objectif de ce stage est donc d'évaluer la qualité des données générées par la \DC, ainsi que mesurer l'erreur commise par le \stack{} par rapport aux mesures de SDSS. Deux analyses seront effectuées, une première de comparaison à une autre base de données, en l'occurrence ici la base de données de SDSS, la seconde d'étude de stabilité temporelle de la base.

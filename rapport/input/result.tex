@@ -1,0 +1,88 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Résultat et discussion
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Le module de comparaison}
+%=================================
+
+	\subsection{Modifications réalisées en cours}
+	%--------------------------------------------
+
+Au cours du stage, les étapes incluses dans le processus général de comparaison ont évolué ; en effet il était prévu à la base, pour ne pas utiliser trop d'espace disque, de rechercher à chaque comparaison les données sur la base de données SDSS et à travers les 16\,000 fichiers \texttt{fits}. Or la limitation d'accès à la base américaine a entrainé une modification des étapes. Les données nécessaire à la comparaison ont donc toutes été importé au \CC{}, et il est prévu de créer une base MySQL ou PostgreSQL pour stocker toutes ces informations, ainsi que les résultats des différents algorithmes d'associations.
+
+La comparaison ne s'effectue plus qu'en 2 étapes, l'étape d'association, qui est le c\oe{}ur du module de comparaison, et l'étape de réalisation d'étude statistique.  Le temps de calcul est ainsi grandement diminué.
+
+La structure du programme \Cpp{} gérant l'association est telle qu'il est simple de changer d'algorithme de comparaison si celui-ci utilise la même structure de données pour lire les données d'entrée.
+
+\
+
+Au cours des réunions mensuelles de l'équipe LSST-Calcul, l'algorithme de voisinage fixe fut critique de par sa fenêtre de $2"$ trop grande pour des associations de sources correspondant à des étoiles de magnitude 18 à 22. De plus la prise en compte systématique des caractéristiques photométriques est dépréciée par son manque de fiabilité. Mais l'argument pour ce choix d'association est la non-utilisation d'images co-aditionnées. La co-addition d'images consiste à additionner plusieurs images de la même région de ciel pour faire apparaître des détails non visibles sur les images simples, appelées aussi \emph{single-frame}.
+
+
+	\subsection{Le module de comparaison en fonctionnement}
+	%------------------------------------------------------
+
+Le lancement du module de comparaison a été simplifié pour une utilisation sans encombre. L'utilisateur n'a qu'un fichier de configuration à modifier, le script \texttt{init.py} s'occupant de l'export des données aux différentes parties du programme.
+
+Le script d'initialisation est lui-même relativement simple. Il effectue la compilation des différentes parties écrite en \Cpp{} pour l'utilisateur, ainsi que l'écriture et le lancement des \emph{jobs} à l'aide de la commande \texttt{qsub}. L'utilisation du script s'effectue avec une seule ligne de commande, et celui-ci écrit tous les \emph{logs} nécessaires au suivi des étapes de lancement.
+
+\
+
+Une fois lancés, il n'est plus possible d'interagir avec les \emph{jobs} mais on peut connaître leur état d'avancement à l'aide de la commande \texttt{qstat} dont un exemple de sortie est disponible ci-dessous.
+
+	\begin{verbatim}
+job-ID  prior   user    s  queue                slots ja-task-ID 
+----------------------------------------------------------------
+4041806 0.51246 jmassot r  mc_medium@ccwsge0315     6 1
+4041806 0.51246 jmassot r  mc_medium@ccwsge0455     6 2
+4041806 0.51246 jmassot r  mc_medium@ccwsge0291     6 3
+4041806 0.51246 jmassot r  mc_medium@ccwsge0446     6 4
+4041806 0.00000 jmassot qw                          6 5-100:1
+4041810 0.00000 jmassot qw                          6 101-144:1
+	\end{verbatim}
+
+Les informations données par \texttt{qstat} sur les \emph{jobs} soumis sont multiples dont un exemple restreint est présenté ci-dessus. Principalement on trouve :
+	\begin{itemize}
+		\item L'identifiant de la tâche ;
+		\item La priorité de la tâche qui par défaut est à zéro, elle est strictement positive lorsque la tâche est en cours d'exécution ;
+		\item L'utilisateur qui a soumis cette tâche ;
+		\item L'état du \emph{job} : \texttt{r} pour \emph{run} et \texttt{qw} pour \emph{queue waiting} ;
+		\item Le nom de la file sur laquelle tourne la tâche, au \CC{} seulement certaines files permettent le \emph{multithreading} ;
+		\item Le nombre de c\oe{}urs aloués à cette tâche ;
+		\item L'identifiant dans le tableau de \emph{jobs} soumis à \texttt{qsub}.
+	\end{itemize}
+Dans l'exemple, les files sur lesquelles tournent les \emph{jobs} représentent des machines physiques différentes puisqu'il s'agit des machines \texttt{ccwsge0315}, \texttt{ccwsge0455}, etc.
+
+	\subsection{Résultats graphiques}
+	%--------------------------------
+
+De par sa méthode de lancement, pour le moment le programme réalise un graphique de l'écart de magnitude et de coordonnées par colonne et pour chaque \emph{run}. Une fusion des fichiers \texttt{csv} d'association permettrait de réaliser un graphique pour l'ensemble des données. Des exemples de la sortie graphique sont disponibles sur les figures~\ref{fig:deltaCoord}~et~\ref{fig:deltaMag}, celles-ci représentent respectivement l'écart de coordonnées à rapport aux sources SDSS et l'écart de magnitude toujours par rapport aux sources SDSS.
+
+	\begin{figure}[h]
+	  \centering
+	  \subfloat[$Delta$ Coord]{\label{fig:deltaCoord}\includegraphics[width=0.45\textwidth]{img/deltaCoord.png}}
+	  \hspace{5pt}
+	  \subfloat[$Delta$ Mag]{\label{fig:deltaMag}\includegraphics[width=0.45\textwidth]{img/deltaMag.png}}
+	  
+	  \caption[Sortie graphique du module statistique]{Sortie graphique du module statistique, on observe ici à la fois l'écart de coordonnées par rapport aux sources SDSS (à gauche) et l'écart de magnitude par rapport aux sources SDSS (à droite).}
+	  \label{fig:fv}
+	\end{figure}
+
+Les résultats semblent approuver la qualité du traitement d'images effectué par le \stack{}. Mais il est aussi possible que ces résultats soient le fruit d'une mauvaise approximation des décimales par la machine, en effet la gestion des réels n'est jamais exacte en informatique et entraine des erreurs lorsqu'il est nécessaire de garder une grande précision, cela est décrit dans la \emph{IBM’s General Decimal Arithmetic Specification} \cite{IBM}.
+
+
+\section{Le module de suivi}
+%===========================
+
+Le suivi des sources est en cours de réalisation. Une première mouture en \Python{} a été réalisée, mais celle-ci récupérait toutes les sources comprises dans une fenêtre de $2"$, et traçait un graphique dont les marges d'erreurs étaient trop importantes. La deuxième mouture utilisera l'algorithme de comparaison, il s'agira donc d'un noyau de calcul en \Cpp{} interfacé avec le langage \Python{} pour une plus grande souplesse d'écriture ainsi qu'une facilité de maintenabilité.
+
+\section{Correspondance aux demandes}
+%====================================
+
+La méthode de développement est proche d'une méthode agile, dans le sens où le développement se faisait en lien avec la demande. En effet la méthode \emph{kanban} permet à n'importe qui d'ajouter au fil des besoins des tâches à effectuer, un ordre de priorité a ensuite été instauré pour gérer les entrées. Cela a permis à la fin d'obtenir un produit qui correspond au mieux aux attentes des physiciens, avec les outils demandés (le couple \Python{}, \Cpp{} et le \emph{framework} \texttt{ROOT} pour les réalisations graphiques).
+
+L'informatique n'est pas le c\oe{}ur de métier des personnes avec qui j'ai pu dialogué au cours de ce stage, il est donc important de privilégier la lisibilité du code pour favoriser sa maintenabilité, plutôt que la performance avec des langages bas-niveau comme le \Cpp{}. Ce dernier langage n'a été utilisé que pour le module de comparaison qui doit traiter de grands lots de données, il devait donc gérer convenablement la mémoire, de plus le gain de performance non négligeable a joué en sa faveur. En revanche les parties pouvant être modifiées après mon départ ont été écrites en \Python{} pour sa simplicité d'écriture et de compréhension. Les performances de \Python{} peuvent être accrues en l'interfaçant avec un langage compilé comme le \Cpp{} à l'aide de \texttt{SWIG}. Ce dernier permet d'utiliser une bibliothèque de fonctions écrite en \Cpp{} au milieu d'un script \Python{}, c'est le cas de nombreux modules mathématiques de \Python{} comme \texttt{numpy}.
+
+\ 
+
+

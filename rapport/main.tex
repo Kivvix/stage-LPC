@@ -1,0 +1,158 @@
+\documentclass[a4paper, 11pt]{article}
+
+\input{input/preambule}
+
+\title{Analyse de qualité du traitement d'images grande profondeur captées par un téléscope}
+\author{Josselin \textsc{Massot}}
+\def\tutor{Bogdan \textsc{Vulpescu}}
+\def\tutorIsima{Christophe \textsc{Tilmant}}
+\def\duration{5 mois}
+\date{29 août 2014}
+
+
+\begin{document}
+
+
+%%% TITLE PAGE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\thepage}{}
+\pagestyle{plain}
+
+\maketitle
+
+
+%%% THANKS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\pagenumbering{roman}
+
+\
+\vfill
+\section*{Remerciements}
+\addcontentsline{toc}{section}{Remerciements}
+
+Je tiens avant tout à remercier mon tuteur, Bogdan \textsc{Vulpescu}, ingénieur de recherche au LPC-Clermont. Il m'a laissé une grande liberté quant aux possibilités de développement, encadré et soutenu dans le calme.
+
+Je voudrais remercier Alain \textsc{Falvard}, directeur du LPC pour son accueil au sein de la structure qu'est le LPC, mais aussi à toute l'équipe du service informatique qui m'a très rapidement intégré parmi eux.
+
+Mes remerciments vont aussi à Alexandre \textsc{Claude} pour son soutient, les infatigables débats que nous avons partagés, ainsi qu'Emmanuel \textsc{Delage} pour la place que tous les deux m'ont laissée dans leur bureau.
+
+Je souhaite remercier plus particulièrement, Emmanuel \textsc{Gangler}, chargé de recherche au CNRS, sans qui ce stage n'aurait pas eu lieu.
+
+\vfill
+\
+
+
+%%% LIST OF FIGURES AND TABLES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\section*{Liste des figures, tableaux, algorithmes et extraits de code}
+\addcontentsline{toc}{section}{Liste des figures, tableaux, algorithmes et extraits de code}
+\listoffigures
+\listoftables
+\listofalgorithms
+\lstlistoflistings
+
+%%% ABSRACT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\section*{Résumé -- Abstract}
+\addcontentsline{toc}{section}{Résumé -- Abstract}
+
+\subsection*{Résumé}
+
+Le projet \textbf{LSST} est une initiative mondiale pour construire un nouveau téléscope pour surveiller en continue le ciel. Avant que le téléscope ne commence à produire des données, les astronomes commencent à tester les techniques d'analyse d'images en créant un logiciel nommé \stack{}. \\
+Le \stack{} fut testé au cours de l'été 2013 lors de la \emph{Data-Challange 2013} au Centre de calcul de l'IN2P3. L'exploit fut plus technique que scientifique puisqu'aucune analyse des résultats ne fut effectuée.
+
+Ce stage a pour but d'effectuer l'\textbf{analyse de la qualité} de ce traitement d'images en comparant ces données à celles d'un autre télescope : SDSS. Cette comparaison permettra d'apprécier l'erreur commise par le logiciel \stack{}. Pour cela nous nous intéresserons à différents \textbf{algorithmes de recherche de plus proche voisin}.\\
+Vu la quantité de données à analyser, les machines de \emph{batch} du Centre de calcul du Lyon furent utilisées, ainsi que certaines méthodes de \textbf{calcul parallélisé}.
+
+\vspace{0.75em}
+\textbf{Mots clés :} LSST, analyse de qualité, algorithme de recherche de plus proche voisin, calul parallélisé
+
+\subsection*{Abstract}
+
+\begin{otherlanguage}{english}
+The \textbf{LSST} project is a worldwide initiative to built a new telescope to monitor the sky. Before the telescope begins to produce data, astronomers are beginning to test image processing and built a software named \stack{}. \\
+The \stack{} was tested during the summer of 2013 on the \emph{Data-Challange 2013} at the Computer Center of IN2P3. The feat was more technical than scientific because no analysis of the results was performed.
+
+This training  is designed to perform the \textbf{analysis of the quality} of the image processing by comparing them with those of another telescope: SDSS. This comparison will assess the error made by the software \stack{}. To do this we will focus on different \textbf{algorithms nearest neighbor search}. \\
+Considering the amount of data to analyze, batch machines of the Computer Centre of Lyon were used, and some methods of \textbf{parallel computing}.
+
+\vspace{0.75em}
+\textbf{Keywords:} LSST, analysis of the quality, algorithms nearest neighbor search, parallel computing
+\end{otherlanguage}
+
+%%% TABLE OF CONTENTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\tableofcontents{}
+
+
+%%% GLOSSARY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+%\thispagestyle{plain}
+
+\section*{Glossaire}
+\addcontentsline{toc}{section}{Glossaire}
+	\input{|"glossaire/.gloss.sh"}
+
+
+
+%%% INTRODUCTION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\pagestyle{fancy}
+\renewcommand{\thepage}{\arabic{page}}
+\setcounter{page}{1}
+
+\section{Introduction}
+\input{input/intro}
+
+
+%%% TEXT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% ----------------------------------------------------------------------
+% Introduction de l'étude
+% ----------------------------------------------------------------------
+\part{Introduction de l'étude}
+\input{input/etude}
+
+% ----------------------------------------------------------------------
+% Méthode et résolution
+% ----------------------------------------------------------------------
+\part{Méthodes et résolution}
+\input{input/metho}
+
+% ----------------------------------------------------------------------
+% Résultat et discussion
+% ----------------------------------------------------------------------
+\part{Résultats et discussion}
+\input{input/result}
+
+
+
+%%% CONCLUSION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part*{\ }
+\section{Conclusion}
+\input{input/conclu}
+
+
+%%% BIBLIOGRAPHY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\newpage
+\pagenumbering{Roman}
+\pagestyle{plain}
+
+\section*{Bibliographie \& Webographie}
+\addcontentsline{toc}{section}{Bibliographie \& Webographie}
+\nocite{*}
+\bibliographystyle{alpha}
+\bibliography{input/biblio}
+
+\newpage
+\pagestyle{empty}
+\ 
+%\appendix
+%\part{Annexe}
+
+%\section*{Documentation des scripts et programmes réalisés}
+
+\end{document}
